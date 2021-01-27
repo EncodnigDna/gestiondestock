@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="appswindows.UserControluser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:appswindows"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="191*"/>
+            <ColumnDefinition Width="208*"/>
+            <ColumnDefinition Width="189*"/>
+            <ColumnDefinition Width="212*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="373"/>
+        </Grid.RowDefinitions>
+        <Border Margin="5,5,0,8" Grid.Column="0" Background="#FF3689E5" VerticalAlignment="Stretch" CornerRadius="12" >
+            <Grid Margin="0,10" >
+                <TextBlock Margin="74,0,10,-8" FontSize="18" Foreground="White" Opacity="0.55" FontFamily="Sitka Text"><Run Text="number"/><Run Text=" "/><Run Text="of "/><LineBreak/><Run Text="Employees"/></TextBlock>
+                <TextBlock Margin="10,-6,132,10" FontSize="36" Foreground="White" Text="65" TextAlignment="Center" Opacity="0.51" Height="43" VerticalAlignment="Bottom"/>
+            </Grid>
+        </Border>
+        <Border Margin="10,5,7,8" Background="#FF8E24AA" VerticalAlignment="Stretch" CornerRadius="12" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="addicom" Source="icon/user.png" Margin="0,10,119,10" Opacity="0.315" ></Image>
+                <Button x:Name="addemp" Content="          Add &#xA;          Employees&#xA;" Height="Auto" FontSize="20" Foreground="White" Opacity="0.625" FontFamily="Sitka Text" Click="addemp_Click_1" >
+                    <Button.BorderBrush>
+                        <ImageBrush/>
+                    </Button.BorderBrush>
+                    <Button.Background>
+                        <ImageBrush/>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
+        </Border>
+        <Border Margin="3,5,1,8" Background="#FF43A047" VerticalAlignment="Stretch" CornerRadius="12" Grid.Column="2">
+            <Grid x:Name="edit" Height="Auto" Margin="0">
+                <Image x:Name="Edit" Source="icon/edit.png" Margin="0,10,109,0" Opacity="0.625"></Image>
+                <Button Height="67" Content="            Edit &#xA;            Employees" FontSize="20" VerticalAlignment="Bottom" Opacity="0.625" FontFamily="Sitka Text" HorizontalAlignment="Right" Width="185" Click="Button_Click">
+                    <Button.BorderBrush>
+                        <ImageBrush/>
+                    </Button.BorderBrush>
+                    <Button.Background>
+                        <ImageBrush/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Border>
+        <Border Margin="9,5,10,0" Background="#FFC70C06" VerticalAlignment="Top" CornerRadius="12" Height="65" Grid.Column="3">
+            <Grid x:Name="delete" Margin="0,0,0,31">
+                <Image Source="icon/delete-user.png" Margin="2,7,118,-23" RenderTransformOrigin="0.5,0.5" Opacity="0.495" >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-1.39"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.913"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Button x:Name="delete2" Content="          Delete        &#xA;          Employees" Height="Auto" FontSize="20" Opacity="0.735" Click="delete2_Click" Margin="0,0,0,-31">
+                    <Button.BorderBrush>
+                        <ImageBrush/>
+                    </Button.BorderBrush>
+                    <Button.Background>
+                        <ImageBrush/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Border>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="245" Margin="0,65,0,0" VerticalAlignment="Top" Width="786" Background="White" Grid.Row="1" Grid.ColumnSpan="4">
+            <Border.BorderBrush>
+                <ImageBrush/>
+            </Border.BorderBrush>
+            <DataGrid  x:Name="dataemp" Margin="-1,-1,9,-1" Background="White" SelectionChanged="dataemp_SelectionChanged"/>
+        </Border>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="786" Grid.Row="1" Background="White" Grid.ColumnSpan="4">
+            <Border.BorderBrush>
+                <ImageBrush/>
+            </Border.BorderBrush>
+            <Grid>
+                <TextBox HorizontalAlignment="Left" Height="29" Margin="319,10,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="search" VerticalAlignment="Top" Width="263"/>
+                <Button x:Name="search" Width="Auto" Margin="607,10,26,16" Content="search"></Button>
+            </Grid>
+        </Border>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Margin="0,315,0,0" Width="786" Background="White" Grid.Row="1" Grid.ColumnSpan="4">
+            <Border.BorderBrush>
+                <ImageBrush/>
+            </Border.BorderBrush>
+        </Border>
+    </Grid>
+</UserControl>

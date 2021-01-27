@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="gestion_stockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="achat">
+          <Key>
+            <PropertyRef Name="id_achat" />
+          </Key>
+          <Property Name="id_achat" Type="int" Nullable="false" />
+          <Property Name="date_achat" Type="datetime" Nullable="false" />
+          <Property Name="qte_achat" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="id_produit" Type="int" Nullable="false" />
+          <Property Name="id_fornisuer" Type="int" Nullable="false" />
+          <Property Name="id_emplyee" Type="int" Nullable="false" />
+          <Property Name="note_achat" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="int" Nullable="false" />
+          <Property Name="nom_client" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="adress_client" Type="ntext" Nullable="false" />
+          <Property Name="tele_client" Type="varchar(max)" Nullable="false" />
+          <Property Name="note_client" Type="nchar" MaxLength="10" />
+          <Property Name="image" Type="image" />
+        </EntityType>
+        <EntityType Name="emplyee">
+          <Key>
+            <PropertyRef Name="id_emp" />
+          </Key>
+          <Property Name="id_emp" Type="int" Nullable="false" />
+          <Property Name="image_emp" Type="image" Nullable="false" />
+          <Property Name="login_emp" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password_emp" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nom" Type="varchar(max)" Nullable="false" />
+          <Property Name="prenom" Type="varchar(max)" Nullable="false" />
+          <Property Name="Ntele" Type="int" Nullable="false" />
+          <Property Name="type_emp" Type="varchar(max)" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fornisuer">
+          <Key>
+            <PropertyRef Name="id_fornisuer" />
+          </Key>
+          <Property Name="id_fornisuer" Type="int" Nullable="false" />
+          <Property Name="nom_fourniseur" Type="varchar(max)" Nullable="false" />
+          <Property Name="address_forniseur" Type="ntext" Nullable="false" />
+          <Property Name="tele_forniseur" Type="varchar(max)" />
+          <Property Name="note_forniseur" Type="varchar" MaxLength="50" />
+          <Property Name="image" Type="image" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="int" Nullable="false" />
+          <Property Name="nom_produit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prix_unitare_prod" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="type_produit" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prix_vent" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="note" Type="nchar" MaxLength="10" />
+          <Property Name="code_bare" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+          </Key>
+          <Property Name="id_vente" Type="int" Nullable="false" />
+          <Property Name="date_vente" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="qentity_vente" Type="int" Nullable="false" />
+          <Property Name="prix_unitare_achat" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="prix_vente" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="mouvement" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="id_produit" Type="int" Nullable="false" />
+          <Property Name="id_client" Type="int" Nullable="false" />
+          <Property Name="id_emp" Type="int" Nullable="false" />
+          <Property Name="note_vente" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_achat_emplyee">
+          <End Role="emplyee" Type="Self.emplyee" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emplyee">
+              <PropertyRef Name="id_emp" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_emplyee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_achat_fornisuer">
+          <End Role="fornisuer" Type="Self.fornisuer" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fornisuer">
+              <PropertyRef Name="id_fornisuer" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_fornisuer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_achat_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_emplyee">
+          <End Role="emplyee" Type="Self.emplyee" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emplyee">
+              <PropertyRef Name="id_emp" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_emp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gestion_stockModelStoreContainer">
+          <EntitySet Name="achat" EntityType="Self.achat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emplyee" EntityType="Self.emplyee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fornisuer" EntityType="Self.fornisuer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produit" EntityType="Self.produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vente" EntityType="Self.vente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_achat_emplyee" Association="Self.FK_achat_emplyee">
+            <End Role="emplyee" EntitySet="emplyee" />
+            <End Role="achat" EntitySet="achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_achat_fornisuer" Association="Self.FK_achat_fornisuer">
+            <End Role="fornisuer" EntitySet="fornisuer" />
+            <End Role="achat" EntitySet="achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_achat_produit" Association="Self.FK_achat_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="achat" EntitySet="achat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_client" Association="Self.FK_vente_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="vente" EntitySet="vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_emplyee" Association="Self.FK_vente_emplyee">
+            <End Role="emplyee" EntitySet="emplyee" />
+            <End Role="vente" EntitySet="vente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_produit" Association="Self.FK_vente_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="vente" EntitySet="vente" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gestion_stockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="achat">
+          <Key>
+            <PropertyRef Name="id_achat" />
+          </Key>
+          <Property Name="id_achat" Type="Int32" Nullable="false" />
+          <Property Name="date_achat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="qte_achat" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="id_produit" Type="Int32" Nullable="false" />
+          <Property Name="id_fornisuer" Type="Int32" Nullable="false" />
+          <Property Name="id_emplyee" Type="Int32" Nullable="false" />
+          <Property Name="note_achat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="emplyee" Relationship="Self.FK_achat_emplyee" FromRole="achat" ToRole="emplyee" />
+          <NavigationProperty Name="fornisuer" Relationship="Self.FK_achat_fornisuer" FromRole="achat" ToRole="fornisuer" />
+          <NavigationProperty Name="produit" Relationship="Self.FK_achat_produit" FromRole="achat" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="Int32" Nullable="false" />
+          <Property Name="nom_client" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adress_client" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tele_client" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="note_client" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="ventes" Relationship="Self.FK_vente_client" FromRole="client" ToRole="vente" />
+        </EntityType>
+        <EntityType Name="emplyee">
+          <Key>
+            <PropertyRef Name="id_emp" />
+          </Key>
+          <Property Name="id_emp" Type="Int32" Nullable="false" />
+          <Property Name="image_emp" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="login_emp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password_emp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ntele" Type="Int32" Nullable="false" />
+          <Property Name="type_emp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="achats" Relationship="Self.FK_achat_emplyee" FromRole="emplyee" ToRole="achat" />
+          <NavigationProperty Name="ventes" Relationship="Self.FK_vente_emplyee" FromRole="emplyee" ToRole="vente" />
+        </EntityType>
+        <EntityType Name="fornisuer">
+          <Key>
+            <PropertyRef Name="id_fornisuer" />
+          </Key>
+          <Property Name="id_fornisuer" Type="Int32" Nullable="false" />
+          <Property Name="nom_fourniseur" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address_forniseur" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tele_forniseur" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="note_forniseur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="achats" Relationship="Self.FK_achat_fornisuer" FromRole="fornisuer" ToRole="achat" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="id_produit" />
+          </Key>
+          <Property Name="id_produit" Type="Int32" Nullable="false" />
+          <Property Name="nom_produit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prix_unitare_prod" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="type_produit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prix_vent" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="code_bare" Type="Int32" />
+          <NavigationProperty Name="achats" Relationship="Self.FK_achat_produit" FromRole="produit" ToRole="achat" />
+          <NavigationProperty Name="ventes" Relationship="Self.FK_vente_produit" FromRole="produit" ToRole="vente" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="vente">
+          <Key>
+            <PropertyRef Name="id_vente" />
+          </Key>
+          <Property Name="id_vente" Type="Int32" Nullable="false" />
+          <Property Name="date_vente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="qentity_vente" Type="Int32" Nullable="false" />
+          <Property Name="prix_unitare_achat" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="prix_vente" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="mouvement" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="id_produit" Type="Int32" Nullable="false" />
+          <Property Name="id_client" Type="Int32" Nullable="false" />
+          <Property Name="id_emp" Type="Int32" Nullable="false" />
+          <Property Name="note_vente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="client" Relationship="Self.FK_vente_client" FromRole="vente" ToRole="client" />
+          <NavigationProperty Name="emplyee" Relationship="Self.FK_vente_emplyee" FromRole="vente" ToRole="emplyee" />
+          <NavigationProperty Name="produit" Relationship="Self.FK_vente_produit" FromRole="vente" ToRole="produit" />
+        </EntityType>
+        <Association Name="FK_achat_emplyee">
+          <End Role="emplyee" Type="Self.emplyee" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emplyee">
+              <PropertyRef Name="id_emp" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_emplyee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_achat_fornisuer">
+          <End Role="fornisuer" Type="Self.fornisuer" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fornisuer">
+              <PropertyRef Name="id_fornisuer" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_fornisuer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_achat_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="achat" Type="Self.achat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="achat">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_emplyee">
+          <End Role="emplyee" Type="Self.emplyee" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emplyee">
+              <PropertyRef Name="id_emp" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_emp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vente_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="vente" Type="Self.vente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="id_produit" />
+            </Principal>
+            <Dependent Role="vente">
+              <PropertyRef Name="id_produit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gestion_stockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="achats" EntityType="Self.achat" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="emplyees" EntityType="Self.emplyee" />
+          <EntitySet Name="fornisuers" EntityType="Self.fornisuer" />
+          <EntitySet Name="produits" EntityType="Self.produit" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="ventes" EntityType="Self.vente" />
+          <AssociationSet Name="FK_achat_emplyee" Association="Self.FK_achat_emplyee">
+            <End Role="emplyee" EntitySet="emplyees" />
+            <End Role="achat" EntitySet="achats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_achat_fornisuer" Association="Self.FK_achat_fornisuer">
+            <End Role="fornisuer" EntitySet="fornisuers" />
+            <End Role="achat" EntitySet="achats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_achat_produit" Association="Self.FK_achat_produit">
+            <End Role="produit" EntitySet="produits" />
+            <End Role="achat" EntitySet="achats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_client" Association="Self.FK_vente_client">
+            <End Role="client" EntitySet="clients" />
+            <End Role="vente" EntitySet="ventes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_emplyee" Association="Self.FK_vente_emplyee">
+            <End Role="emplyee" EntitySet="emplyees" />
+            <End Role="vente" EntitySet="ventes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vente_produit" Association="Self.FK_vente_produit">
+            <End Role="produit" EntitySet="produits" />
+            <End Role="vente" EntitySet="ventes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="gestion_stockModelStoreContainer" CdmEntityContainer="gestion_stockEntities">
+          <EntitySetMapping Name="achats">
+            <EntityTypeMapping TypeName="gestion_stockModel.achat">
+              <MappingFragment StoreEntitySet="achat">
+                <ScalarProperty Name="id_achat" ColumnName="id_achat" />
+                <ScalarProperty Name="date_achat" ColumnName="date_achat" />
+                <ScalarProperty Name="qte_achat" ColumnName="qte_achat" />
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="id_fornisuer" ColumnName="id_fornisuer" />
+                <ScalarProperty Name="id_emplyee" ColumnName="id_emplyee" />
+                <ScalarProperty Name="note_achat" ColumnName="note_achat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="gestion_stockModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="nom_client" ColumnName="nom_client" />
+                <ScalarProperty Name="adress_client" ColumnName="adress_client" />
+                <ScalarProperty Name="tele_client" ColumnName="tele_client" />
+                <ScalarProperty Name="note_client" ColumnName="note_client" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emplyees">
+            <EntityTypeMapping TypeName="gestion_stockModel.emplyee">
+              <MappingFragment StoreEntitySet="emplyee">
+                <ScalarProperty Name="id_emp" ColumnName="id_emp" />
+                <ScalarProperty Name="image_emp" ColumnName="image_emp" />
+                <ScalarProperty Name="login_emp" ColumnName="login_emp" />
+                <ScalarProperty Name="password_emp" ColumnName="password_emp" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="Ntele" ColumnName="Ntele" />
+                <ScalarProperty Name="type_emp" ColumnName="type_emp" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fornisuers">
+            <EntityTypeMapping TypeName="gestion_stockModel.fornisuer">
+              <MappingFragment StoreEntitySet="fornisuer">
+                <ScalarProperty Name="id_fornisuer" ColumnName="id_fornisuer" />
+                <ScalarProperty Name="nom_fourniseur" ColumnName="nom_fourniseur" />
+                <ScalarProperty Name="address_forniseur" ColumnName="address_forniseur" />
+                <ScalarProperty Name="tele_forniseur" ColumnName="tele_forniseur" />
+                <ScalarProperty Name="note_forniseur" ColumnName="note_forniseur" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produits">
+            <EntityTypeMapping TypeName="gestion_stockModel.produit">
+              <MappingFragment StoreEntitySet="produit">
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="nom_produit" ColumnName="nom_produit" />
+                <ScalarProperty Name="prix_unitare_prod" ColumnName="prix_unitare_prod" />
+                <ScalarProperty Name="type_produit" ColumnName="type_produit" />
+                <ScalarProperty Name="prix_vent" ColumnName="prix_vent" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="code_bare" ColumnName="code_bare" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="gestion_stockModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ventes">
+            <EntityTypeMapping TypeName="gestion_stockModel.vente">
+              <MappingFragment StoreEntitySet="vente">
+                <ScalarProperty Name="id_vente" ColumnName="id_vente" />
+                <ScalarProperty Name="date_vente" ColumnName="date_vente" />
+                <ScalarProperty Name="qentity_vente" ColumnName="qentity_vente" />
+                <ScalarProperty Name="prix_unitare_achat" ColumnName="prix_unitare_achat" />
+                <ScalarProperty Name="prix_vente" ColumnName="prix_vente" />
+                <ScalarProperty Name="mouvement" ColumnName="mouvement" />
+                <ScalarProperty Name="id_produit" ColumnName="id_produit" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="id_emp" ColumnName="id_emp" />
+                <ScalarProperty Name="note_vente" ColumnName="note_vente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
